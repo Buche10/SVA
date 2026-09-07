@@ -165,7 +165,8 @@ export const matterTypes = [
 export const contactInfo = {
     city: 'Ambato, Ecuador',
     coverage: 'Cobertura nacional',
-    whatsapp: '', // TODO: número real de WhatsApp
+    whatsapp: '+593 98 466 8399',
+    whatsappUrl: 'https://wa.me/593984668399',
     email: '',    // TODO: correo de consultas
 };
 

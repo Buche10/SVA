@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    /*
+    | CRM de Ualdo: las consultas del sitio se reenvían al intake para gestionarlas
+    | en una sola bandeja. Si falta url o secret, el reenvío se omite en silencio
+    | (la consulta igual queda guardada en la BD local).
+    */
+    'ualdo_crm' => [
+        'url' => env('UALDO_LEADS_URL'),       // p. ej. https://ualdocorp.com/api/leads/intake
+        'secret' => env('UALDO_LEADS_SECRET'),
+    ],
+
 ];

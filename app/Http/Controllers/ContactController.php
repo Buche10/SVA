@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreContactRequest;
 use App\Models\Lead;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Captación pública de consultas jurídicas. Es el único punto de ESCRITURA sin
@@ -29,8 +31,53 @@ class ContactController extends Controller
         $lead->user_agent = substr((string) $request->userAgent(), 0, 1000);
         $lead->save();
 
-        // TODO (opcional): notificar por correo a la firma cuando se configure MAIL.
+        // Reenvía la consulta al CRM de Ualdo para gestionarla en una sola bandeja.
+        // Corre DESPUÉS de enviar la respuesta (terminating) para no hacer esperar
+        // al usuario. Best-effort: si el CRM no está configurado o falla, la
+        // consulta ya quedó guardada localmente, así que nunca se pierde.
+        app()->terminating(fn () => $this->forwardToCrm($lead));
 
         return back();
+    }
+
+    /**
+     * Reenvía la consulta al intake del CRM de Ualdo (server-to-server), etiquetada
+     * como 'sitio-firma'. El área concreta se antepone al mensaje para no perderla.
+     */
+    private function forwardToCrm(Lead $lead): void
+    {
+        $crm = config('services.ualdo_crm');
+        if (empty($crm['url']) || empty($crm['secret'])) {
+            return;
+        }
+
+        $areas = [
+            'civil' => 'Derecho Civil',
+            'laboral' => 'Derecho Laboral',
+            'empresarial' => 'Derecho Empresarial y Societario',
+            'asesoria_empresas' => 'Asesoría a Empresas',
+            'asesoria_politica' => 'Asesoría Política y Gestión Pública',
+            'otro' => 'Consulta general',
+        ];
+        $areaLabel = $areas[$lead->matter_type] ?? ($lead->matter_type ?: 'Consulta general');
+        $message = trim('[Área: '.$areaLabel.'] '.((string) $lead->message));
+
+        try {
+            Http::withHeaders(['X-Leads-Secret' => $crm['secret']])
+                ->timeout(8)
+                ->post($crm['url'], [
+                    'first_name' => $lead->first_name,
+                    'last_name' => $lead->last_name,
+                    'email' => $lead->email,
+                    'phone' => $lead->phone,
+                    'city' => $lead->city,
+                    'message' => $message,
+                    'product_interest' => 'legal',
+                    'source' => 'sitio-firma',
+                ])
+                ->throw();
+        } catch (\Throwable $e) {
+            Log::warning('No se pudo reenviar la consulta al CRM de Ualdo: '.$e->getMessage());
+        }
     }
 }
