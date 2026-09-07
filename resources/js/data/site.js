@@ -168,3 +168,32 @@ export const contactInfo = {
     whatsapp: '', // TODO: número real de WhatsApp
     email: '',    // TODO: correo de consultas
 };
+
+// Preguntas frecuentes. Responden lo que la gente (y la IA) busca. Deben quedar
+// SINCRONIZADAS con el bloque FAQPage (JSON-LD) de resources/views/app.blade.php.
+export const faqs = [
+    {
+        q: '¿Qué es la LOPDP y a quién obliga?',
+        a: 'La LOPDP es la Ley Orgánica de Protección de Datos Personales del Ecuador. Obliga a toda organización que trate datos personales —empresas, cooperativas, instituciones y profesionales— a proteger esa información y respetar los derechos de sus titulares, bajo riesgo de sanciones.',
+    },
+    {
+        q: '¿Qué es un Delegado de Protección de Datos (DPO) y cuándo lo necesito?',
+        a: 'El DPO (Delegado de Protección de Datos) es la figura responsable de velar por el cumplimiento de la protección de datos en una organización. Ofrecemos DPO externo para empresas que deben designarlo o que prefieren delegar esa función en especialistas.',
+    },
+    {
+        q: '¿Cómo ayudan a mi empresa a cumplir la LOPDP y el RGPD europeo?',
+        a: 'Hacemos un diagnóstico de brechas, diseñamos y construimos el sistema de protección de datos (políticas, avisos de privacidad y registro de tratamientos), capacitamos a tu equipo y acompañamos con un DPO externo, alineados con la LOPDP del Ecuador y el RGPD europeo (GDPR).',
+    },
+    {
+        q: '¿Asesoran a cooperativas de ahorro y crédito (SEPS)?',
+        a: 'Sí. Asesoramos al sector financiero popular y solidario en cumplimiento ante la Superintendencia de Economía Popular y Solidaria (SEPS), gobierno cooperativo, prevención de lavado de activos (LAFT) y protección de datos del socio.',
+    },
+    {
+        q: '¿Registran marcas y protegen propiedad intelectual?',
+        a: 'Sí. Registramos marcas y signos distintivos ante el SENADI y protegemos la propiedad intelectual (patentes, derechos de autor y secretos empresariales) como parte del área de Derecho Empresarial y Societario.',
+    },
+    {
+        q: '¿Dónde están ubicados y atienden a nivel nacional?',
+        a: 'Estamos en Ambato, Ecuador, y brindamos cobertura nacional. Puedes agendar una consulta desde el formulario de contacto del sitio.',
+    },
+];

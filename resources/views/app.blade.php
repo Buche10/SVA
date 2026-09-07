@@ -37,6 +37,43 @@
             ['@type' => 'Person', 'name' => 'Alex Mauricio Parra', 'jobTitle' => 'Socio Fundador · Dirección Jurídica'],
             ['@type' => 'Person', 'name' => 'Carlos Bucheli Escobar', 'jobTitle' => 'Socio Fundador · Dirección Tecnológica'],
         ],
+        'hasOfferCatalog' => [
+            '@type' => 'OfferCatalog',
+            'name' => 'Áreas de práctica y servicios',
+            'itemListElement' => array_map(fn ($s) => [
+                '@type' => 'Offer',
+                'itemOffered' => ['@type' => 'Service', 'name' => $s],
+            ], [
+                'Derecho Civil',
+                'Derecho Laboral',
+                'Derecho Empresarial y Societario',
+                'Registro de marcas y propiedad intelectual (SENADI)',
+                'Protección de datos personales (LOPDP y RGPD)',
+                'Delegado de Protección de Datos (DPO) externo',
+                'Derecho de la Economía Digital',
+                'Gobernanza y Derecho de la Inteligencia Artificial',
+                'Sector Financiero Popular y Solidario (SEPS)',
+            ]),
+        ],
+    ];
+
+    // FAQPage. Mantener SINCRONIZADO con `faqs` en resources/js/data/site.js.
+    $faqs = [
+        ['¿Qué es la LOPDP y a quién obliga?', 'La LOPDP es la Ley Orgánica de Protección de Datos Personales del Ecuador. Obliga a toda organización que trate datos personales —empresas, cooperativas, instituciones y profesionales— a proteger esa información y respetar los derechos de sus titulares, bajo riesgo de sanciones.'],
+        ['¿Qué es un Delegado de Protección de Datos (DPO) y cuándo lo necesito?', 'El DPO (Delegado de Protección de Datos) es la figura responsable de velar por el cumplimiento de la protección de datos en una organización. Ofrecemos DPO externo para empresas que deben designarlo o que prefieren delegar esa función en especialistas.'],
+        ['¿Cómo ayudan a mi empresa a cumplir la LOPDP y el RGPD europeo?', 'Hacemos un diagnóstico de brechas, diseñamos y construimos el sistema de protección de datos (políticas, avisos de privacidad y registro de tratamientos), capacitamos a tu equipo y acompañamos con un DPO externo, alineados con la LOPDP del Ecuador y el RGPD europeo (GDPR).'],
+        ['¿Asesoran a cooperativas de ahorro y crédito (SEPS)?', 'Sí. Asesoramos al sector financiero popular y solidario en cumplimiento ante la Superintendencia de Economía Popular y Solidaria (SEPS), gobierno cooperativo, prevención de lavado de activos (LAFT) y protección de datos del socio.'],
+        ['¿Registran marcas y protegen propiedad intelectual?', 'Sí. Registramos marcas y signos distintivos ante el SENADI y protegemos la propiedad intelectual (patentes, derechos de autor y secretos empresariales) como parte del área de Derecho Empresarial y Societario.'],
+        ['¿Dónde están ubicados y atienden a nivel nacional?', 'Estamos en Ambato, Ecuador, y brindamos cobertura nacional. Puedes agendar una consulta desde el formulario de contacto del sitio.'],
+    ];
+    $faqLd = [
+        '@context' => 'https://schema.org',
+        '@type' => 'FAQPage',
+        'mainEntity' => array_map(fn ($f) => [
+            '@type' => 'Question',
+            'name' => $f[0],
+            'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]],
+        ], $faqs),
     ];
 @endphp
 <html lang="es">
@@ -72,6 +109,7 @@
 
         {{-- Datos estructurados (JSON-LD) — legibles por Google y buscadores de IA --}}
         <script type="application/ld+json">{!! json_encode($jsonLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+        <script type="application/ld+json">{!! json_encode($faqLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 
         <!-- Fonts: Cormorant Garamond (titulares) + Inter (cuerpo) -->
         <link rel="preconnect" href="https://fonts.bunny.net">

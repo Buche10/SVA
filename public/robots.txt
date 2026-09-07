@@ -13,4 +13,4 @@ Allow: /
 User-agent: ClaudeBot
 Allow: /
 
-Sitemap: https://santamaria.ualdocorp.com/sitemap.xml
+Sitemap: https://legal.ualdocorp.com/sitemap.xml

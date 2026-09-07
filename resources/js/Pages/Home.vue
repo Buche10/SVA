@@ -1,6 +1,10 @@
 <script setup>
+import { ref } from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import { practiceAreas, advisory, team, matterTypes, contactInfo } from '@/data/site';
+import { practiceAreas, advisory, team, matterTypes, contactInfo, faqs } from '@/data/site';
+
+const openFaq = ref(0);
+const toggleFaq = (i) => { openFaq.value = openFaq.value === i ? null : i; };
 
 const form = useForm({
     first_name: '',
@@ -261,6 +265,29 @@ const submit = () => {
                    class="mt-8 inline-flex rounded-full border border-sv-navy-800/20 px-7 py-3 font-semibold text-sv-navy-800 hover:border-sv-gold-500 transition">
                     Conocer Ualdo Corp
                 </a>
+            </div>
+        </section>
+
+        <!-- Preguntas frecuentes -->
+        <section id="faq" class="bg-white py-24 scroll-mt-20">
+            <div class="mx-auto max-w-3xl px-6">
+                <div class="mb-12">
+                    <p class="text-sv-gold-600 font-semibold tracking-widest uppercase text-xs">Preguntas frecuentes</p>
+                    <h2 class="font-serif text-4xl mt-3">Resolvemos tus dudas</h2>
+                </div>
+                <div class="space-y-3">
+                    <div v-for="(f, i) in faqs" :key="i" class="rounded-2xl border border-sv-navy-900/10 overflow-hidden">
+                        <button @click="toggleFaq(i)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-sv-cream/60 transition">
+                            <span class="font-serif text-lg text-sv-navy-800 pr-4">{{ f.q }}</span>
+                            <svg class="w-5 h-5 text-sv-gold-600 shrink-0 transition-transform" :class="{ 'rotate-180': openFaq === i }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div v-show="openFaq === i" class="px-6 pb-5 text-sm text-sv-navy-700/80 leading-relaxed border-t border-sv-navy-900/5">
+                            <p class="pt-4">{{ f.a }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
