@@ -218,8 +218,8 @@ const submit = () => {
                 </div>
                 <div class="grid gap-8 md:grid-cols-3">
                     <article v-for="p in team" :key="p.name" class="rounded-2xl border border-sv-navy-900/10 overflow-hidden">
-                        <div class="aspect-[4/3] bg-sv-navy-800 flex items-center justify-center">
-                            <img :src="p.photo" :alt="`Foto de ${p.name}, ${p.role}`" class="h-full w-full object-cover object-top"
+                        <div class="aspect-[3/4] bg-sv-navy-800 flex items-center justify-center">
+                            <img :src="p.photo" :alt="`Foto de ${p.name}, ${p.role}`" class="h-full w-full object-cover object-center"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
                             <span class="hidden h-full w-full items-center justify-center font-serif text-6xl text-sv-gold-400">{{ p.initials }}</span>
                         </div>
