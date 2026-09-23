@@ -147,7 +147,7 @@ export const team = [
         ],
         bio: 'Dirige Ualdo, la unidad de IA soberana de la firma: arquitectura, desarrollo y evolución del producto. Apoya el área de derecho laboral.',
         focus: ['Ualdo · IA soberana', 'Innovación', 'Derecho laboral'],
-        photo: '/branding/team/c-bucheli.jpg',
+        photo: '/branding/team/c-bucheli.webp',
         initials: 'CB',
     },
 ];
